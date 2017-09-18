@@ -28,7 +28,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class NetworkFragment extends Fragment {
     public static final String TAG = "NetworkFragment";
 
-    private static final String URL_KEY = "UrlKey";
+    private static final String URL_KEY = "http://api.tvmaze.com/search/shows?q=";
 
     private DownloadCallback mCallback;
     private DownloadTask mDownloadTask;
@@ -79,7 +79,7 @@ public class NetworkFragment extends Fragment {
      */
     public void startDownload() {
         cancelDownload();
-        mDownloadTask = new DownloadTask();
+        mDownloadTask = new DownloadTask(mCallback);
         mDownloadTask.execute(mUrlString);
     }
 
@@ -200,14 +200,14 @@ public class NetworkFragment extends Fragment {
                 connection.setDoInput(true);
                 // Open communications link (network traffic occurs here).
                 connection.connect();
-                publishProgress(DownloadCallback.Progress.CONNECT_SUCCESS);
+                //publishProgress(DownloadCallback.Progress.CONNECT_SUCCESS);
                 int responseCode = connection.getResponseCode();
                 if (responseCode != HttpsURLConnection.HTTP_OK) {
                     throw new IOException("HTTP error code: " + responseCode);
                 }
                 // Retrieve the response body as an InputStream.
                 stream = connection.getInputStream();
-                publishProgress(DownloadCallback.Progress.GET_INPUT_STREAM_SUCCESS, 0);
+                //publishProgress(DownloadCallback.Progress.GET_INPUT_STREAM_SUCCESS, 0);
                 if (stream != null) {
                     // Converts Stream to String with max length of 500.
                     result = readStream(stream, 500);
@@ -242,5 +242,6 @@ public class NetworkFragment extends Fragment {
             }
             return buffer.toString();
         }
+
     }
 }

@@ -1,8 +1,10 @@
 package com.example.jurvanzonneveld.helloworld;
 
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.os.AsyncTask;
 
@@ -31,9 +33,10 @@ public class AsyncJsonActivity extends FragmentActivity implements DownloadCallb
     private boolean mDownloading = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        ...
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mNetworkFragment = NetworkFragment.getInstance(getSupportFragmentManager(), "https://www.google.com");
+
     }
 
     private void startDownload() {
@@ -43,7 +46,7 @@ public class AsyncJsonActivity extends FragmentActivity implements DownloadCallb
             mDownloading = true;
         }
     }
-    @Override
+
     public void updateFromDownload(String result) {
         // Update your UI here based on result of download.
     }
